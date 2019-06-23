@@ -46,7 +46,7 @@ if __name__ == '__main__':
 	K = 50
 	prf_iteration = 10
 
-	query = "高雄發大財"
+	query = input()
 	bc = BertClient()
 	vector = bc.encode([query])
 

@@ -56,5 +56,5 @@ def load_obj(name):
 
 if __name__ == '__main__':
 	course_dict = load_obj('course')
-	course_dict = trans_elmo(course_dict)
-	save_obj(course_dict, 'embedding/embedding_elmo')
+	course_dict = trans_bert(course_dict)
+	save_obj(course_dict, 'embedding/embedding_bert')
