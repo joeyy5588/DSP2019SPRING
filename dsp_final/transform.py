@@ -5,6 +5,7 @@ from bert_serving.client import BertClient
 import numpy as np
 from elmoformanylangs import Embedder
 import pickle
+from pywordseg import *
 
 
 
@@ -14,15 +15,6 @@ def trans_w2v(text):
 	model = Word2Vec.load("pretrained/zh.bin")
 	vector = model.wv[text]
 	print(vector)
-
-def trans_elmo(text):
-	options_file = "options.json" 
-	weight_file = "weights.hdf5"
-	elmo = Elmo(options_file, weight_file, 1, dropout=0)
-	sentence_lists = [text]
-	character_ids = batch_to_ids(sentences_lists)
-	embeddings = elmo(character_ids)['elmo_representations']
-	print(embeddings)
 
 def trans_bert(dic):
 	#bert-serving-start -model_dir chinese_L-12_H-768_A-12/
@@ -41,8 +33,10 @@ def trans_bert(dic):
 def trans_elmo(dic):
 	e = Embedder('pretrained/')
 	sents = []
+	seg = Wordseg(batch_size=8, device="cuda:0", embedding='elmo', elmo_use_cuda=False, mode="TW")
 	for key in dic:
-		sents.append([dic[key]])
+		sents.append(dic[key])
+	sents = seg.cut(sents)
 	vector = e.sents2elmo(sents, -1)
 	print(len(vector))
 	i = 0
