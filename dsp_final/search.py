@@ -43,7 +43,7 @@ def PRF(query, rank_list, top_k_index, bottom_k_index, K):
 if __name__ == '__main__':
 	#bert-serving-start -model_dir chinese_L-12_H-768_A-12/
 	embedding_dict = load_obj('embedding/embedding_bert')
-	K = 50
+	K = 10
 	prf_iteration = 10
 
 	query = input()
